@@ -64,15 +64,19 @@ export default function CheckoutForm({ total, shippingInfo }: CheckoutFormProps)
     const orderId = `AMV-${Date.now()}`
     
     // Simulate payment processing
-    setTimeout(async () => {
-      // Send order confirmation emails
-      await sendOrderEmails(orderId)
-      
+    setTimeout(() => {
+      // Clear cart immediately
       clearCart()
-      alert(`Payment Successful! ✅\n\nYour Order ID: ${orderId}\n\nA confirmation email has been sent to your inbox.`)
+      
+      // Try to send emails (but don't block on failure)
+      sendOrderEmails(orderId).catch(err => {
+        console.error('Email send failed:', err)
+      })
+      
+      alert(`Payment Successful! ✅\n\nYour Order ID: ${orderId}\n\nThank you for your order!`)
       window.location.href = '/order-confirmation'
       setIsProcessing(false)
-    }, 2000)
+    }, 1500)
   }
 
   // Razorpay handler
@@ -196,6 +200,22 @@ export default function CheckoutForm({ total, shippingInfo }: CheckoutFormProps)
           <p><strong>UPI:</strong> success@razorpay</p>
         </div>
       </div>
+
+      <button
+        type="button"
+        onClick={handleDemoPayment}
+        disabled={isProcessing}
+        className={`btn-secondary w-full mb-3 ${isProcessing ? 'bg-warm-gray-400 cursor-not-allowed' : ''}`}
+      >
+        {isProcessing ? (
+          <div className="flex items-center justify-center space-x-2">
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-sage-600 border-t-transparent"></div>
+            <span>Processing...</span>
+          </div>
+        ) : (
+          `Test Payment (Demo) • ₹${total.toLocaleString('en-IN')}`
+        )}
+      </button>
 
       <button
         type="button"
