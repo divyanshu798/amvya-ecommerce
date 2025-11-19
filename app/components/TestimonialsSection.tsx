@@ -5,14 +5,14 @@ export default function TestimonialsSection() {
     {
       name: "Sarah Chen",
       location: "San Francisco, CA",
-      text: "The bamboo sheets are incredibly soft and keep me cool all night. Love knowing they're sustainably made!",
+      text: "The bamboo sheets are incredibly soft and keep me cool all night. Love knowing they&apos;re sustainably made!",
       rating: 5,
       product: "Bamboo Lyocell Sheet Set"
     },
     {
       name: "Marcus Rodriguez",
       location: "Austin, TX", 
-      text: "Best comforter I've ever owned. The recycled fill is just as cozy as down, and my allergies have completely disappeared.",
+      text: "Best comforter I&apos;ve ever owned. The recycled fill is just as cozy as down, and my allergies have completely disappeared.",
       rating: 5,
       product: "Down Alternative Comforter"
     },
@@ -47,7 +47,7 @@ export default function TestimonialsSection() {
               </div>
               
               <blockquote className="text-warm-gray-700 text-lg leading-relaxed mb-6">
-                "{testimonial.text}"
+                &ldquo;{testimonial.text}&rdquo;
               </blockquote>
               
               <div>
@@ -70,8 +70,8 @@ export default function TestimonialsSection() {
             Try amvya Risk-Free
           </h3>
           <p className="text-warm-gray-600 text-lg leading-relaxed max-w-2xl mx-auto mb-8">
-            We're so confident you'll love your new bedding that we offer a 100-night sleep trial. 
-            If you're not completely satisfied, we'll pick it up and give you a full refund.
+            We&apos;re so confident you&apos;ll love your new bedding that we offer a 100-night sleep trial. 
+            If you&apos;re not completely satisfied, we&apos;ll pick it up and give you a full refund.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -9,7 +9,7 @@ export default function SustainabilitySection() {
             Naturally Conscious
           </h2>
           <p className="text-lg text-warm-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We believe that true luxury doesn't come at the expense of our planet. 
+            We believe that true luxury doesn&apos;t come at the expense of our planet. 
             Every amvya product is crafted with sustainable practices and materials that honor both your comfort and the Earth.
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function SustainabilitySection() {
             Our Commitment to Tomorrow
           </h3>
           <p className="text-warm-gray-600 text-lg leading-relaxed max-w-3xl mx-auto mb-8">
-            By 2025, we're committed to achieving 100% renewable energy in our supply chain, 
+            By 2025, we&apos;re committed to achieving 100% renewable energy in our supply chain, 
             eliminating all single-use plastics from our packaging, and supporting regenerative 
             agriculture practices that actually improve the soil health of our cotton farms.
           </p>
