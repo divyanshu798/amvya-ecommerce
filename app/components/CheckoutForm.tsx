@@ -106,16 +106,23 @@ export default function CheckoutForm({ total, shippingInfo }: CheckoutFormProps)
           // Generate order ID
           const orderId = `AMV-${Date.now()}`
           
-          // Send order confirmation emails
-          await sendOrderEmails(orderId)
-          
-          clearCart()
-          alert(`Payment Successful! ✅\n\nYour Order ID: ${orderId}\nPayment ID: ${response.razorpay_payment_id}\n\nA confirmation email has been sent.`)
-          // Redirect to order confirmation page
-          setTimeout(() => {
+          try {
+            // Send order confirmation emails
+            await sendOrderEmails(orderId)
+            
+            // Clear cart
+            clearCart()
+            
+            // Show success message
+            alert(`Payment Successful! ✅\n\nYour Order ID: ${orderId}\nPayment ID: ${response.razorpay_payment_id}\n\nA confirmation email has been sent to your inbox.`)
+            
+            // Redirect to order confirmation page
             window.location.href = '/order-confirmation'
-          }, 1000)
-          setIsProcessing(false)
+          } catch (error) {
+            console.error('Error after payment:', error)
+            alert(`Payment Successful! ✅\n\nYour Order ID: ${orderId}\nPayment ID: ${response.razorpay_payment_id}\n\nPlease note down your order ID for reference.`)
+            window.location.href = '/order-confirmation'
+          }
         },
         prefill: {
           name: 'Customer',
