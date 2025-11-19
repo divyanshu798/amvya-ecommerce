@@ -24,7 +24,7 @@ export default function CheckoutForm({ total, shippingInfo }: CheckoutFormProps)
       const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
       const tax = subtotal * 0.18
       
-      await fetch('/api/send-order-email', {
+      const response = await fetch('/api/send-order-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,8 +45,13 @@ export default function CheckoutForm({ total, shippingInfo }: CheckoutFormProps)
           subtotal
         })
       })
+      
+      if (!response.ok) {
+        console.error('Email API error:', await response.text())
+      }
     } catch (error) {
       console.error('Failed to send order emails:', error)
+      // Don't throw - allow payment to complete even if email fails
     }
   }
 
@@ -105,24 +110,21 @@ export default function CheckoutForm({ total, shippingInfo }: CheckoutFormProps)
           
           // Generate order ID
           const orderId = `AMV-${Date.now()}`
+          console.log('Order ID:', orderId)
           
-          try {
-            // Send order confirmation emails
-            await sendOrderEmails(orderId)
-            
-            // Clear cart
-            clearCart()
-            
-            // Show success message
-            alert(`Payment Successful! ✅\n\nYour Order ID: ${orderId}\nPayment ID: ${response.razorpay_payment_id}\n\nA confirmation email has been sent to your inbox.`)
-            
-            // Redirect to order confirmation page
-            window.location.href = '/order-confirmation'
-          } catch (error) {
-            console.error('Error after payment:', error)
-            alert(`Payment Successful! ✅\n\nYour Order ID: ${orderId}\nPayment ID: ${response.razorpay_payment_id}\n\nPlease note down your order ID for reference.`)
-            window.location.href = '/order-confirmation'
-          }
+          // Clear cart immediately
+          clearCart()
+          
+          // Try to send emails (but don't block on failure)
+          sendOrderEmails(orderId).catch(err => {
+            console.error('Email send failed:', err)
+          })
+          
+          // Show success message
+          alert(`Payment Successful! ✅\n\nYour Order ID: ${orderId}\nPayment ID: ${response.razorpay_payment_id}\n\nThank you for your order!`)
+          
+          // Redirect to order confirmation page
+          window.location.href = '/order-confirmation'
         },
         prefill: {
           name: 'Customer',
