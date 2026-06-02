@@ -1,4 +1,4 @@
-# Lovable E-Commerce Website
+#  E-Commerce Website
 
 A premium e-commerce website for sustainable bed essentials built with Next.js, TypeScript, and Tailwind CSS.
 
